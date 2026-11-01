@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#190f2b">
+  <title>Enter My Heart | 10 Months of Us</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+    :root {
+      --night: #170e27;
+      --plum: #281638;
+      --pink: #ff9fc5;
+      --rose: #f36c9d;
+      --cream: #fff4f7;
+      --muted: #d9bfd0
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--night);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer
+    }
+
+    .screen {
+      min-height: 100svh;
+      display: none;
+      position: relative;
+      overflow: hidden;
+      padding: 28px 18px
+    }
+
+    .screen.active {
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .stars,
+    .stars:before,
+    .stars:after {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(2px 2px at 12% 22%, #fff 50%, transparent 55%), radial-gradient(1px 1px at 72% 16%, #ffd5e6 50%, transparent 55%), radial-gradient(2px 2px at 88% 64%, #fff 50%, transparent 55%), radial-gradient(1px 1px at 33% 78%, #ffd5e6 50%, transparent 55%), radial-gradient(1px 1px at 54% 43%, #fff 50%, transparent 55%);
+      opacity: .6;
+      animation: twinkle 5s ease-in-out infinite alternate
+    }
+
+    @keyframes twinkle {
+      to {
+        opacity: .22;
+        transform: translateY(-5px)
+      }
+    }
+
+    .glow {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: #e84d91;
+      filter: blur(110px);
+      opacity: .18;
+      pointer-events: none
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      width: min(850px, 100%);
+      text-align: center
+    }
+
+    .eyebrow {
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      font-size: .7rem;
+      color: var(--pink);
+      font-weight: 700
+    }
+
+    h1,
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      margin: .5em 0
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 8vw, 5.2rem);
+      line-height: 1.02
+    }
+
+    h2 {
+      font-size: clamp(2rem, 6vw, 3.5rem)
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 650px;
+      margin: 12px auto
+    }
+
+    button.primary {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 26px;
+      background: linear-gradient(120deg, #ffb4d0, #ef6b9c);
+      color: #35172a;
+      font-weight: 700;
+      box-shadow: 0 12px 38px #f36c9d44;
+      transition: .25s
+    }
+
+    button.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 45px #f36c9d66
+    }
+
+    button.ghost {
+      background: #ffffff0d;
+      border: 1px solid #ffffff35;
+      color: var(--cream);
+      border-radius: 999px;
+      padding: 10px 16px
+    }
+
+    .heart-orbit {
+      width: 180px;
+      height: 180px;
+      margin: 30px auto 24px;
+      position: relative;
+      display: grid;
+      place-items: center
+    }
+
+    .big-heart {
+      font-size: 104px;
+      filter: drop-shadow(0 0 28px #ff76ae99);
+      animation: heartbeat 1.4s infinite
+    }
+
+    .orbit {
+      position: absolute;
+      inset: 0;
+      border: 1px solid #ffb4d055;
+      border-radius: 50%;
+      animation: spin 12s linear infinite
+    }
+
+    .orbit:after {
+      content: '♥';
+      position: absolute;
+      top: 4px;
+      left: 28px;
+      color: #ff9fc5;
+      font-size: 22px
+    }
+
+    @keyframes heartbeat {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      12% {
+        transform: scale(1.12)
+      }
+
+      24% {
+        transform: scale(1)
+      }
+
+      36% {
+        transform: scale(1.08)
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .scene-card {
+      width: min(820px, 100%);
+      border: 1px solid #ffffff20;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #ffffff12, #ffffff05);
+      padding: 22px 18px 25px;
+      box-shadow: 0 25px 80px #0005;
+      backdrop-filter: blur(10px)
+    }
+
+    .progress {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin: 0 0 18px
+    }
+
+    .dot {
+      height: 5px;
+      width: 25px;
+      border-radius: 5px;
+      background: #ffffff30
+    }
+
+    .dot.on {
+      background: var(--pink)
+    }
+
+    .video-frame {
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 9 / 16;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      margin: 0 auto;
+      background: #090711;
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .video-placeholder {
+      padding: 22px;
+      text-align: center;
+      color: #f9dce9
+    }
+
+    .video-placeholder .film-icon {
+      font-size: 42px;
+      display: block;
+      margin-bottom: 10px
+    }
+
+    .video-placeholder strong {
+      display: block;
+      font-size: 1rem
+    }
+
+    .video-placeholder small {
+      display: block;
+      color: #d9bfd0;
+      margin-top: 7px;
+      line-height: 1.5
+    }
+
+    .upload-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 15px 0 4px
+    }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ffb4d077;
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: #ffe3ee;
+      background: #ffffff0b;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer
+    }
+
+    .file-label:hover {
+      background: #ffffff18
+    }
+
+    .file-label input {
+      display: none
+    }
+
+    .file-name {
+      font-size: .78rem;
+      color: #d9bfd0;
+      max-width: 100%;
+      overflow-wrap: anywhere
+    }
+
+    .caption {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: #fff;
+      margin: 18px 0 4px
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px
+    }
+
+    .music-note {
+      position: fixed;
+      right: 14px;
+      top: 14px;
+      z-index: 20
+    }
+
+    .music-panel {
+      position: fixed;
+      left: 14px;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: calc(100vw - 150px)
+    }
+
+    .music-panel .file-label {
+      padding: 9px 13px;
+      font-size: .82rem
+    }
+
+    .music-status {
+      font-size: .75rem;
+      color: #f3ccdc;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .final-note {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: #ffe3ee;
+      line-height: 1.35
+    }
+
+    .hint {
+      font-size: .78rem;
+      color: #c9adbf
+    }
+
+    @media(max-width:520px) {
+      .scene-card {
+        padding: 15px 12px 20px;
+        border-radius: 22px
+      }
+
+      .video-frame {
+        border-radius: 13px
+      }
+
+      .music-panel {
+        left: 8px;
+        top: 8px;
+        gap: 5px
+      }
+
+      .music-panel .file-label {
+        font-size: .72rem;
+        padding: 8px 10px
+      }
+
+      .music-note {
+        right: 8px;
+        top: 8px;
+        padding: 9px 11px
+      }
+
+      .music-status {
+        max-width: 80px;
+        font-size: .68rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+<audio id="backgroundSong" loop preload="auto">
+    <source src="assets/music/our-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <section class="screen active" id="welcome">
+    <div class="stars"></div>
+    <div class="glow" style="left:-100px;top:10%"></div>
+    <div class="content">
+      <div class="eyebrow">A little universe made for you</div>
+      <div class="heart-orbit">
+        <div class="orbit"></div>
+        <div class="big-heart">♥</div>
+      </div>
+      <h1>Enter My Heart</h1>
+      <p>Somewhere between all our calls, smiles and little moments, you became my favourite place.</p>
+      <button class="primary" id="enter" type="button">Enter my heart ♡</button>
+      
+      <p style="font-size:.78rem;margin-top:8px">A story of two hearts · 10 months and counting</p>
+    </div>
+  </section>
+
+  <section class="screen" id="hug">
+    <div class="stars"></div>
+    <div class="content">
+      <div class="scene-card">
+        <div class="progress"><i class="dot on"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+        <div class="eyebrow">Chapter one</div>
+        <h2>The distance ends after 1 year</h2>
+        <div class="video-frame" id="airportFrame">
+          <video id="airportVideo" autoplay muted loop playsinline preload="auto">
+            <source src="assets/videos/airport-reunion.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="caption">After 1 year of wait, finally meeting my NOBITA❤️</div>
+        <div class="controls"><button class="primary" id="toProposal" type="button">Next chapter →</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="proposal">
+    <div class="stars"></div>
+    <div class="content">
+      <div class="scene-card">
+        <div class="progress"><i class="dot"></i><i class="dot on"></i><i class="dot"></i><i class="dot"></i></div>
+        <div class="eyebrow">Chapter two</div>
+        <h2>Chlo Shaadi krlete h <br> Marry me RajaShree💍👰❤️!!!</h2>
+        <div class="video-frame" id="proposalFrame">
+    <video id="proposalVideo" autoplay muted loop playsinline preload="auto">
+        <source src="assets/videos/proposal.mp4" type="video/mp4">
+    </video>
+</div>
+<div class="caption">Will you be my wife, RajaShree?💍👰❤️</div>
+        <p>I love you so much, chlo shopping krwaunga!❤️.</p>
+        <div class="controls"><button class="primary" id="yes" type="button">Always yes ♡</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="distance">
+    <div class="stars"></div>
+    <div class="content">
+      <div class="scene-card">
+        <div class="progress"><i class="dot"></i><i class="dot"></i><i class="dot on"></i><i class="dot"></i></div>
+        <div class="eyebrow">Chapter three</div>
+        <h2>2000KM se 13000KM 🙁</h2>
+        <div class="video-frame" id="distanceFrame">
+    <video id="distanceVideo" autoplay muted loop playsinline preload="auto">
+        <source src="assets/videos/long-distance.mp4" type="video/mp4">
+    </video>
+</div>
+<div class="caption">Only few days left and then we'll be together!🎉</div>
+        <p>Miss u Baby! ❤️3000 ki speed se!❤️</p>
+        <div class="controls"><button class="primary" id="toFinal" type="button">Our last chapter →</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="final">
+    <div class="stars"></div>
+    <div class="glow" style="right:-100px;bottom:0"></div>
+    <div class="content">
+      <div class="eyebrow">Chapter four · 10 months of us</div>
+      <div class="heart-orbit">
+        <div class="orbit"></div>
+        <div class="big-heart">♥</div>
+      </div>
+      <h2 class="final-note">10 months down,<br>a lifetime to go.</h2>
+      <p>No matter how many miles separate us, you will always have a home in my heart. Thank you for being my favourite
+        person, my safe place, and my sweetest story.</p>
+      <p style="color:#ffb4d0;font-weight:700">I love you. Always. ❤️</p>
+      <div class="controls"><button class="primary" id="replay" type="button">Replay our story ↺</button></div>
+      <p style="font-size:.75rem;margin-top:25px">Made with all my heart ♡</p>
+    </div>
+  </section>
+
+  <script>
+    const screenIds = ['welcome', 'hug', 'proposal', 'distance', 'final'];
+    const chapterVideos = {
+      hug: 'airportVideo',
+      proposal: 'proposalVideo',
+      distance: 'distanceVideo'
+    };
+    const videoIds = Object.values(chapterVideos);
+    const song = document.getElementById('backgroundSong');
+
+    // Keep the background track looping for the entire story.
+    song.loop = true;
+
+    function show(screenId) {
+      screenIds.forEach((id) => {
+        const screen = document.getElementById(id);
+        if (screen) screen.classList.toggle('active', id === screenId);
+      });
+
+      videoIds.forEach((videoId) => {
+        const video = document.getElementById(videoId);
+        if (!video) return;
+
+        if (chapterVideos[screenId] === videoId) {
+          video.muted = true;
+          video.loop = true;
+          const playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch((error) => console.warn('Video could not play:', videoId, error));
+          }
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // This click is the browser-approved user gesture that starts the music.
+    document.getElementById('enter').addEventListener('click', () => {
+      song.loop = true;
+      const musicPromise = song.play();
+      if (musicPromise && typeof musicPromise.catch === 'function') {
+        musicPromise.catch((error) => console.error('Music could not play. Check assets/music/our-song.mp3:', error));
+      }
+      show('hug');
+    });
+
+    document.getElementById('toProposal').addEventListener('click', () => show('proposal'));
+    document.getElementById('yes').addEventListener('click', () => show('distance'));
+    document.getElementById('toFinal').addEventListener('click', () => show('final'));
+    document.getElementById('replay').addEventListener('click', () => show('welcome'));
+
+    // Attempt muted autoplay for the first chapter video after entering.
+    document.getElementById('airportVideo').muted = true;
+  </script>
+  
+</body>
+
+</html>
